@@ -19,7 +19,7 @@ const UserList = () => {
     };
 
     fetchUsers();
-  }, [users]);
+  }, []);
 
   const handleDeleteButton = async (userId) => {
     // sredjen interface pre slanja podataka backu
@@ -81,11 +81,11 @@ const UserList = () => {
         {users.length > 0 ? (
           <ul style={{ paddingLeft: "20px" }}>
             {users.map((user, index) => (
-              <li key={user.id} style={{ marginBottom: "10px", fontSize: "16px", border: '1px solid', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <li key={user.id} style={{ marginBottom: "10px", fontSize: "16px", border: '1px solid', padding: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>{user.ime} {user.prezime}</div>
                 <div>
-                <button onClick={() => handleEditButton(user.id, user.ime, user.prezime)}>Edit</button>
-                <button onClick={() => handleDeleteButton(user.id)}>Delete</button>
+                <button className="btn btn-warning me-2" onClick={() => handleEditButton(user.id, user.ime, user.prezime)}>Edit</button>
+                <button className="btn btn-danger" onClick={() => handleDeleteButton(user.id)}>Delete</button>
                 </div>
               </li>
             ))}
