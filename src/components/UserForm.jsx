@@ -8,7 +8,7 @@ const UserForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("http://localhost/vezba/api/insert_user.php", {
+    const response = await fetch("http://localhost/vezba/public/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

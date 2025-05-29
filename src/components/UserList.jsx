@@ -8,18 +8,32 @@ const UserList = () => {
   const [clickedUserPrezime, setClickedUserPrezime] = useState('');
   const [userId, setUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   useEffect(() => {
-    // get users
+    // Učitaj korisnike na početku
     const fetchUsers = async () => {
-      const response = await fetch("http://localhost/vezba/api/get_users.php");
+      const response = await fetch("http://localhost/vezba/public/");
       const data = await response.json();
       setUsers(data);
-      console.log(data);
     };
-
+  
     fetchUsers();
-  }, []);
+  }, []); // ← samo na mount
+  
+  useEffect(() => {
+    // Osveži korisnike ako je editovano
+    if (isEdited) {
+      const fetchUsers = async () => {
+        const response = await fetch("http://localhost/vezba/public/");
+        const data = await response.json();
+        setUsers(data);
+        setIsEdited(false); // resetuj 
+      };
+  
+      fetchUsers();
+    }
+  }, [isEdited]); // ← samo kad se edituje
 
   const handleDeleteButton = async (userId) => {
     // sredjen interface pre slanja podataka backu
@@ -27,7 +41,7 @@ const UserList = () => {
     setUsers(newList);
     // slanje id-ja backendu da brise korisnika
     try {
-        const response = await fetch("http://localhost/vezba/api/delete_user.php", {
+        const response = await fetch("http://localhost/vezba/public/delete", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -109,6 +123,7 @@ const UserList = () => {
      setClickedUserIme = {setClickedUserIme}
      setClickedUserPrezime = {setClickedUserPrezime}
      setIsModalOpen={setIsModalOpen}
+     setIsEdited={setIsEdited}
      />}
     </div>
   );

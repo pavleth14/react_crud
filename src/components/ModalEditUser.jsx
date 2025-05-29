@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const ModalEditUser = ({userId, userIme, userPrezime, setClickedUserIme, setClickedUserPrezime, setIsModalOpen}) => {
+const ModalEditUser = ({userId, userIme, userPrezime, setClickedUserIme, setClickedUserPrezime, setIsModalOpen, setIsEdited}) => {
 
     const handleChangeName = (e) => {
         setClickedUserIme(e.target.value)
@@ -16,10 +16,10 @@ const ModalEditUser = ({userId, userIme, userPrezime, setClickedUserIme, setClic
         console.log(userPrezime)
     }, [userIme, userPrezime])
 
-    const handleSaveButton = async () => {
+    const handleSaveButton = async () => {        
         console.log('userId: ' + userId + ', ime: ' + userIme + ', prezime: ' + userPrezime)
         try {
-            const response = await fetch("http://localhost/vezba/api/edit_user.php", {
+            const response = await fetch("http://localhost/vezba/public/update", {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json"
@@ -29,6 +29,7 @@ const ModalEditUser = ({userId, userIme, userPrezime, setClickedUserIme, setClic
         
             const result = await response.json();
             console.log(result.message);
+            setIsEdited(true);
           } catch (error) {
             console.error("Greška prilikom brisanja:", error);
           }
